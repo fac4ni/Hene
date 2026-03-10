@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Antigone — Révision Complète</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;500;700&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #c9a84c;
+  --gold-l: #e8c97a;
+  --gold-d: #8a6e30;
+  --cream: #f5f0e8;
+  --bg: #100e0b;
+  --bg2: #1c1610;
+  --bg3: #2a1f14;
+  --ink: #3d2e1a;
+  --red: #8b2020;
+  --stone: #9e8a6a;
+  --stone-d: #5a4a30;
+  --green: #2d5a3d;
+  --green-l: #6aab84;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+background: var(–bg);
+color: var(–cream);
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 18px;
+line-height: 1.75;
+min-height: 100vh;
+overflow-x: hidden;
+}
+
+/* BACKGROUND */
+body::before {
+content:’’;
+position:fixed; inset:0;
+background:
+radial-gradient(ellipse 60% 40% at 15% 10%, rgba(201,168,76,0.07) 0%, transparent 70%),
+radial-gradient(ellipse 50% 60% at 85% 90%, rgba(139,32,32,0.06) 0%, transparent 70%),
+url(“data:image/svg+xml,%3Csvg xmlns=‘http://www.w3.org/2000/svg’ width=‘4’ height=‘4’%3E%3Crect width=‘4’ height=‘4’ fill=’%23100e0b’/%3E%3Crect width=‘1’ height=‘1’ x=‘0’ y=‘0’ fill=‘rgba(201,168,76,0.03)’/%3E%3C/svg%3E”);
+pointer-events:none; z-index:0;
+}
+
+/* HEADER */
+header {
+position:relative; text-align:center;
+padding: 70px 20px 50px;
+overflow:hidden;
+}
+.meander {
+position:absolute; top:0; left:0; right:0; height:6px;
+background: repeating-linear-gradient(90deg,
+var(–gold) 0,var(–gold) 10px, transparent 10px, transparent 15px,
+var(–gold) 15px,var(–gold) 25px, transparent 25px, transparent 35px,
+var(–gold) 35px,var(–gold) 45px, transparent 45px,transparent 50px
+); opacity:.5;
+}
+.meander.bottom { top:auto; bottom:0; }
+.header-ornament { font-size:2.5rem; display:block; margin-bottom:16px; filter:drop-shadow(0 0 20px rgba(201,168,76,.5)); animation:pulse 3s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.7} }
+h1 {
+font-family:‘Cinzel Decorative’,serif;
+font-size: clamp(2rem,7vw,4rem);
+color: var(–gold);
+letter-spacing:.06em;
+text-shadow: 0 0 60px rgba(201,168,76,.25), 0 2px 4px rgba(0,0,0,.5);
+line-height:1;
+}
+.header-sub {
+font-family:‘Cinzel’,serif;
+color:var(–stone); font-size:.85rem;
+letter-spacing:.25em; text-transform:uppercase;
+margin-top:12px;
+}
+.header-tags { display:flex; justify-content:center; gap:8px; flex-wrap:wrap; margin-top:18px; }
+.htag {
+font-family:‘Cinzel’,serif; font-size:.65rem; letter-spacing:.15em; text-transform:uppercase;
+padding:4px 12px; border:1px solid rgba(201,168,76,.3); color:var(–stone);
+}
+
+/* NAV */
+nav {
+position:sticky; top:0; z-index:200;
+background:rgba(16,14,11,.97);
+border-bottom:1px solid rgba(201,168,76,.2);
+backdrop-filter:blur(12px);
+overflow-x:auto; scrollbar-width:none;
+display:flex; align-items:stretch;
+}
+nav::-webkit-scrollbar{display:none}
+.tab {
+font-family:‘Cinzel’,serif; font-size:.7rem; letter-spacing:.1em; text-transform:uppercase;
+color:var(–stone-d); padding:15px 16px; cursor:pointer; border:none; background:none;
+white-space:nowrap; border-bottom:2px solid transparent; transition:all .25s; flex-shrink:0;
+}
+.tab:hover{color:var(–gold-l);}
+.tab.active{color:var(–gold); border-bottom-color:var(–gold);}
+
+/* MAIN */
+main { max-width:960px; margin:0 auto; padding:50px 20px 100px; position:relative; z-index:1; }
+.section { display:none; animation:fadeUp .4s ease both; }
+.section.active{display:block;}
+@keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:none} }
+
+/* SECTION TITLE */
+.stitle {
+font-family:‘Cinzel Decorative’,serif;
+font-size:1.3rem; color:var(–gold);
+padding-bottom:14px; margin-bottom:32px;
+border-bottom:1px solid rgba(201,168,76,.2);
+display:flex; align-items:center; gap:12px;
+}
+
+/* CARD */
+.card {
+background: rgba(42,31,20,.65);
+border:1px solid rgba(201,168,76,.18);
+padding:28px 30px; margin-bottom:20px;
+position:relative; transition:border-color .3s;
+}
+.card:hover{border-color:rgba(201,168,76,.35);}
+.card::before {
+content:’’; position:absolute; left:0; top:0; bottom:0;
+width:3px; background:linear-gradient(180deg,var(–gold),transparent); opacity:.45;
+}
+.ctitle {
+font-family:‘Cinzel’,serif; font-size:.88rem; letter-spacing:.12em;
+color:var(–gold); text-transform:uppercase; margin-bottom:14px;
+display:flex; align-items:center; gap:8px;
+}
+p { font-size:1.05rem; line-height:1.8; margin-bottom:10px; }
+p:last-child{margin-bottom:0;}
+ul,ol { padding-left:22px; }
+li { margin-bottom:8px; font-size:1.05rem; line-height:1.75; }
+em { color:var(–gold-l); font-style:italic; }
+strong { color:var(–gold); font-weight:600; }
+a { color:var(–gold); }
+
+/* HIGHLIGHT BOX */
+.highlight {
+background:rgba(201,168,76,.07);
+border:1px solid rgba(201,168,76,.25);
+padding:16px 20px; margin:16px 0;
+}
+.highlight.red { background:rgba(139,32,32,.1); border-color:rgba(139,32,32,.35); }
+.highlight.green { background:rgba(45,90,61,.12); border-color:rgba(106,171,132,.3); }
+
+/* BLOCKQUOTE */
+blockquote {
+border-left:3px solid var(–gold-d);
+padding:14px 22px; margin:16px 0;
+background:rgba(201,168,76,.04);
+font-style:italic; color:var(–gold-l);
+font-size:1.08rem; line-height:1.85;
+}
+.bq-src {
+font-family:‘Cinzel’,serif; font-size:.7rem; color:var(–stone);
+letter-spacing:.1em; margin-top:6px; font-style:normal; display:block;
+}
+
+/* GRID */
+.grid2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.grid3 { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+@media(max-width:640px){ .grid2,.grid3{ grid-template-columns:1fr; } }
+
+/* TABLE */
+table { width:100%; border-collapse:collapse; font-size:1rem; }
+th { font-family:‘Cinzel’,serif; font-size:.72rem; letter-spacing:.12em; text-transform:uppercase; color:var(–gold); padding:10px 12px; border-bottom:1px solid rgba(201,168,76,.3); text-align:left; }
+td { padding:10px 12px; border-bottom:1px solid rgba(201,168,76,.1); vertical-align:top; }
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:rgba(201,168,76,.04);}
+
+/* TIMELINE */
+.timeline { position:relative; padding-left:32px; }
+.timeline::before {
+content:’’; position:absolute; left:10px; top:0; bottom:0;
+width:1px; background:linear-gradient(180deg,var(–gold),transparent); opacity:.35;
+}
+.titem {
+position:relative; margin-bottom:22px;
+padding:20px 22px; background:rgba(42,31,20,.5);
+border:1px solid rgba(201,168,76,.14);
+}
+.titem::before {
+content:’’; position:absolute; left:-27px; top:24px;
+width:10px; height:10px; background:var(–gold); border-radius:50%;
+box-shadow:0 0 10px rgba(201,168,76,.5);
+}
+.tact { font-family:‘Cinzel’,serif; font-size:.68rem; color:var(–gold-d); letter-spacing:.18em; text-transform:uppercase; margin-bottom:6px; }
+
+/* BADGES */
+.badge {
+display:inline-block; font-family:‘Cinzel’,serif; font-size:.62rem;
+letter-spacing:.14em; text-transform:uppercase; padding:3px 10px;
+border:1px solid var(–gold-d); color:var(–gold-d); margin:3px;
+}
+.badge.r { border-color:var(–red); color:#c07070; }
+.badge.g { border-color:#3d7a55; color:#7dbf99; }
+.badge.b { border-color:#3d5a80; color:#8aaacf; }
+
+/* SYNTH TABLE */
+.srow {
+display:grid; grid-template-columns:160px 1fr; gap:0;
+border-bottom:1px solid rgba(201,168,76,.1); padding:11px 0; align-items:start;
+}
+.skey { font-family:‘Cinzel’,serif; font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(–gold-d); padding-top:3px; padding-right:12px; }
+.sval { font-size:1rem; line-height:1.75; }
+
+/* CHAR CARDS */
+.char-card {
+background:rgba(42,31,20,.7); border:1px solid rgba(201,168,76,.18);
+padding:22px; transition:all .3s;
+}
+.char-card:hover{ border-color:rgba(201,168,76,.4); transform:translateY(-2px); }
+.cname { font-family:‘Cinzel’,serif; font-size:1.1rem; color:var(–gold); margin-bottom:3px; }
+.crole { font-family:‘Cinzel’,serif; font-size:.68rem; color:var(–stone); letter-spacing:.15em; text-transform:uppercase; margin-bottom:12px; }
+.cdesc { font-size:.98rem; line-height:1.75; }
+
+/* PROCEDES */
+.proc-card {
+background:rgba(42,31,20,.6); border:1px solid rgba(201,168,76,.16);
+padding:20px; margin-bottom:14px;
+}
+.proc-name { font-family:‘Cinzel’,serif; font-size:.85rem; letter-spacing:.1em; color:var(–gold-l); text-transform:uppercase; margin-bottom:6px; }
+.proc-def { font-size:.95rem; color:var(–stone); margin-bottom:10px; font-style:italic; }
+.proc-ex { font-size:1rem; line-height:1.75; }
+
+/* ACCORDION */
+.accordion { margin-bottom:12px; }
+.acc-header {
+font-family:‘Cinzel’,serif; font-size:.82rem; letter-spacing:.1em; text-transform:uppercase;
+color:var(–gold); padding:14px 18px; background:rgba(42,31,20,.7);
+border:1px solid rgba(201,168,76,.18); cursor:pointer;
+display:flex; justify-content:space-between; align-items:center;
+transition:background .25s;
+}
+.acc-header:hover{ background:rgba(60,45,25,.8); }
+.acc-arrow { transition:transform .3s; font-size:1rem; }
+.acc-body {
+background:rgba(26,18,10,.5); border:1px solid rgba(201,168,76,.12);
+border-top:none; padding:0 20px; max-height:0; overflow:hidden;
+transition:max-height .4s ease, padding .4s ease;
+}
+.acc-body.open { max-height:800px; padding:20px; }
+
+/* QUIZ */
+.qcard { background:rgba(42,31,20,.6); border:1px solid rgba(201,168,76,.18); padding:24px; margin-bottom:18px; }
+.qtext { font-family:‘Cinzel’,serif; font-size:.88rem; line-height:1.6; color:var(–cream); margin-bottom:14px; }
+.opts { display:flex; flex-direction:column; gap:7px; }
+.opt {
+padding:10px 16px; border:1px solid rgba(201,168,76,.2);
+background:rgba(16,14,11,.6); color:var(–cream);
+font-family:‘Cormorant Garamond’,serif; font-size:1rem;
+cursor:pointer; text-align:left; transition:all .2s;
+}
+.opt:hover:not(:disabled){ border-color:var(–gold-d); background:rgba(201,168,76,.08); }
+.opt.correct{ border-color:#4a7c59; background:rgba(74,124,89,.2); color:#8bc4a0; }
+.opt.wrong{ border-color:var(–red); background:rgba(139,32,32,.2); color:#e08080; }
+.opt:disabled{ cursor:default; }
+.q-explain { margin-top:12px; padding:12px 16px; background:rgba(201,168,76,.06); border-left:2px solid var(–gold-d); font-size:.95rem; display:none; }
+.q-explain.show { display:block; }
+#score-box { font-family:‘Cinzel’,serif; text-align:center; font-size:1.2rem; color:var(–gold); padding:24px; display:none; }
+.btn { font-family:‘Cinzel’,serif; font-size:.78rem; letter-spacing:.16em; text-transform:uppercase; padding:12px 28px; border:1px solid var(–gold-d); background:transparent; color:var(–gold); cursor:pointer; transition:all .3s; margin-top:14px; display:inline-block; }
+.btn:hover{ background:rgba(201,168,76,.1); border-color:var(–gold); }
+
+/* ANALYSE EXTRACT */
+.extract-box {
+background:rgba(20,15,10,.7);
+border:1px solid rgba(201,168,76,.25);
+padding:24px 28px; margin:18px 0;
+position:relative;
+}
+.extract-box::before { content:‘❝’; position:absolute; top:-14px; left:20px; font-size:2rem; color:var(–gold-d); background:var(–bg2); padding:0 8px; }
+.extract-text { font-style:italic; color:var(–gold-l); font-size:1.08rem; line-height:2; margin-bottom:16px; }
+.annotation {
+display:inline; background:rgba(201,168,76,.15); border-bottom:2px solid var(–gold);
+cursor:help; position:relative;
+}
+.ann-label {
+display:none; position:absolute; bottom:100%; left:50%; transform:translateX(-50%);
+background:var(–bg2); border:1px solid var(–gold-d); padding:6px 10px;
+font-style:normal; font-size:.82rem; color:var(–cream); white-space:nowrap; z-index:10;
+margin-bottom:6px; font-family:‘Cinzel’,serif; letter-spacing:.05em;
+pointer-events:none;
+}
+.annotation:hover .ann-label { display:block; }
+
+/* PLAN DISS */
+.plan-part {
+background:rgba(42,31,20,.6); border:1px solid rgba(201,168,76,.2);
+padding:0; margin-bottom:16px; overflow:hidden;
+}
+.plan-header {
+background:rgba(201,168,76,.08); padding:16px 22px;
+font-family:‘Cinzel’,serif; font-size:.85rem; letter-spacing:.1em;
+color:var(–gold); text-transform:uppercase;
+}
+.plan-body { padding:18px 22px; }
+.plan-arg { margin-bottom:18px; padding-bottom:18px; border-bottom:1px solid rgba(201,168,76,.1); }
+.plan-arg:last-child { border-bottom:none; margin-bottom:0; padding-bottom:0; }
+.arg-title { font-family:‘Cinzel’,serif; font-size:.78rem; color:var(–stone); letter-spacing:.1em; text-transform:uppercase; margin-bottom:8px; }
+
+/* PROGRESS */
+.prog-bar { background:rgba(201,168,76,.15); height:4px; margin:8px 0; }
+.prog-fill { background:var(–gold); height:100%; transition:width .5s; }
+
+@media(max-width:600px){
+.srow{ grid-template-columns:1fr; gap:4px; }
+h1{font-size:1.9rem;}
+.card{padding:20px 18px;}
+}
+</style>
+
+</head>
+<body>
+
+<header>
+  <div class="meander"></div>
+  <span class="header-ornament">🎭</span>
+  <h1>ANTIGONE</h1>
+  <div class="header-sub">Jean Anouilh · 1944</div>
+  <div class="header-tags">
+    <span class="htag">Tragédie moderne</span>
+    <span class="htag">Résistance · Occupation</span>
+    <span class="htag">Liberté vs Pouvoir</span>
+    <span class="htag">Révision complète</span>
+  </div>
+  <div class="meander bottom"></div>
+</header>
+
+<nav>
+  <button class="tab active" onclick="show('synopsis','this')">📖 Synopsis</button>
+  <button class="tab" onclick="show('personnages','this')">👤 Personnages</button>
+  <button class="tab" onclick="show('themes','this')">⚖️ Thèmes</button>
+  <button class="tab" onclick="show('extraits','this')">🔍 Extraits analysés</button>
+  <button class="tab" onclick="show('procedes','this')">✒️ Procédés</button>
+  <button class="tab" onclick="show('citations','this')">💬 Citations</button>
+  <button class="tab" onclick="show('contexte','this')">📜 Contexte</button>
+  <button class="tab" onclick="show('dissertation','this')">📝 Dissertation</button>
+  <button class="tab" onclick="show('fiche','this')">📋 Synthèse</button>
+  <button class="tab" onclick="show('quiz','this')">❓ Quiz</button>
+</nav>
+
+<main>
+
+<!-- ═══════════════════ SYNOPSIS ═══════════════════ -->
+
+<div id="synopsis" class="section active">
+  <h2 class="stitle">📖 Résumé complet & Structure</h2>
+
+  <div class="card">
+    <div class="ctitle">⚡ Avant la pièce — Le contexte mythologique</div>
+    <p>Tout commence bien avant la pièce. <strong>Œdipe</strong>, roi de Thèbes, a épousé sans le savoir sa propre mère, Jocaste. À sa mort, ses deux fils <strong>Étéocle</strong> et <strong>Polynice</strong> devaient partager le trône en alternant chaque année. Polynice n'a pas voulu rendre le pouvoir et a attaqué Thèbes avec une armée étrangère. Les deux frères se sont entretués. <strong>Créon</strong>, leur oncle maternel, devient roi et doit prendre une décision politique majeure.</p>
+  </div>
+
+  <div class="card">
+    <div class="ctitle">🎭 Le Prologue — La mise en place théâtrale</div>
+    <p>Le <strong>Chœur</strong> entre en scène et présente tous les personnages comme s'ils étaient déjà là, figés, condamnés. Il annonce d'emblée que tout va mal finir. Cette technique est fondamentale chez Anouilh : la <em>tragédie est un mécanisme prévisible</em>, un engrenage qui ne peut pas s'arrêter. Le spectateur sait dès le début qu'Antigone va mourir — et c'est voulu.</p>
+    <blockquote>
+      « Et maintenant que vous les connaissez tous, ils vont pouvoir vous jouer leur histoire. Elle commence au moment où les deux fils d'Œdipe, Étéocle et Polynice, s'étant entre-tués sous les murs de Thèbes, Créon, leur oncle, a pris le pouvoir. »
+      <span class="bq-src">— Le Chœur, Prologue</span>
+    </blockquote>
+  </div>
+
+  <div class="timeline">
+    <div class="titem">
+      <div class="tact">Séquence 1 — L'Aube / La transgression</div>
+      <p>Antigone rentre à l'aube, les pieds sales. La <strong>Nourrice</strong> l'interroge — Antigone esquive. Sa sœur <strong>Ismène</strong> la rejoint : Antigone lui révèle qu'elle a déjà tenté d'ensevelir le corps de Polynice (jeter de la terre sur lui, geste symbolique suffisant selon les lois divines grecques). Ismène refuse de recommencer avec elle : <em>"C'est affreux, je sais. Mais qu'est-ce que tu veux que j'y fasse ?"</em>. Antigone lui répond avec mépris, sans colère.</p>
+    </div>
+    <div class="titem">
+      <div class="tact">Séquence 2 — L'amour impossible</div>
+      <p><strong>Hémon</strong>, son fiancé, la trouve dans la lumière du matin. Elle lui dit qu'elle l'aime, qu'il est beau, qu'il sent bon. Mais elle lui dit aussi de ne pas trop compter sur elle — sans expliquer pourquoi. C'est une scène d'une grande tendresse mélancolique, Antigone sachant déjà qu'elle va mourir.</p>
+    </div>
+    <div class="titem">
+      <div class="tact">Séquence 3 — L'arrestation</div>
+      <p>Les <strong>Gardes</strong> arrêtent Antigone une deuxième fois. Elle a recommencé à recouvrir le corps de ses mains, seule, en plein soleil, sans se cacher. Les gardes l'amènent à <strong>Créon</strong>, qui la reçoit seul, très inquiet.</p>
+    </div>
+    <div class="titem">
+      <div class="tact">Séquence 4 — Le Grand Dialogue (cœur de la pièce)</div>
+      <p>L'affrontement central entre Créon et Antigone. Créon tente d'abord de la protéger (il l'aime, c'est sa nièce). Il lui explique que Polynice était un mauvais fils, un raté, un homme violent. Que sa décision est purement politique, pas personnelle. Il lui propose de l'épargner discrètement si elle se tait. <strong>Antigone refuse absolument</strong>. Elle dit qu'elle ne fait pas ça pour Polynice l'homme, mais pour quelque chose de plus profond qu'elle ne peut pas nommer. Le dialogue s'envenime : Créon la traite d'orgueilleuse, elle l'accuse de lâcheté. <strong>Ismène</strong> tente de partager la faute — Antigone refuse avec colère. Créon, épuisé et furieux, la condamne à mort.</p>
+    </div>
+    <div class="titem">
+      <div class="tact">Séquence 5 — Les Gardes et la lettre</div>
+      <p>Antigone, conduite par les gardes qui jouent aux cartes, leur demande d'envoyer une lettre à Hémon. Elle dicte quelques mots — puis réalise qu'elle n'a rien à dire. Elle demande au garde de lui tenir la main. Scène poignante sur la solitude face à la mort.</p>
+    </div>
+    <div class="titem">
+      <div class="tact">Dénouement — La mort en chaîne</div>
+      <p>Antigone est emmurée vivante dans une grotte. Le <strong>Messager</strong> annonce : Antigone s'est pendue avec sa ceinture. Hémon, entré de force dans la grotte, s'est jeté sur son épée après avoir craché au visage de son père. La reine <strong>Eurydice</strong>, qui tricotait, entend la nouvelle — elle sort sans un mot et se tranche les veines. <strong>Créon reste seul</strong>, avec pour toute compagnie son page, un enfant qui ne comprend rien. Il reste en vie — et c'est peut-être pire que la mort.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ctitle">📐 Structure de la pièce</div>
+    <p>Contrairement aux tragédies classiques en cinq actes, Antigone est <strong>une pièce en un seul acte continu</strong>, sans entracte. Cette continuité mime l'engrenage fatal : une fois lancé, le mécanisme ne peut plus s'arrêter. Anouilh utilise le <em>Chœur</em> pour ponctuer et commenter, comme dans la tragédie antique.</p>
+    <div class="grid2" style="margin-top:16px">
+      <div class="highlight">
+        <strong>Unité de temps :</strong> tout se passe en une seule journée (de l'aube au soir)
+      </div>
+      <div class="highlight">
+        <strong>Unité de lieu :</strong> palais de Créon à Thèbes
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ PERSONNAGES ═══════════════════ -->
+
+<div id="personnages" class="section">
+  <h2 class="stitle">👤 Personnages — Analyse complète</h2>
+
+  <div class="grid2">
+    <div class="char-card">
+      <div class="cname">Antigone</div>
+      <div class="crole">🔴 La Protagoniste · L'Idéaliste</div>
+      <div class="cdesc">Petite, brune, maigre. "Pas belle". Elle tranche avec sa sœur Ismène, "belle, épanouie". Antigone est froide, sèche, déterminée. Son combat n'est pas vraiment pour Polynice : c'est un refus existentiel du monde des compromis. Elle <strong>choisit librement de mourir</strong> plutôt que de vivre dans une mediocrité qu'elle méprise. Symbole de pureté absolue.</div>
+    </div>
+    <div class="char-card">
+      <div class="cname">Créon</div>
+      <div class="crole">🟡 L'Antagoniste · Le Réaliste</div>
+      <div class="cdesc">Roi de Thèbes depuis peu. Ni tyran ni monstre — c'est l'homme du <strong>réalisme et du devoir politique</strong>. Il gouverne parce que "quelqu'un doit le faire". Il aime Antigone, essaie sincèrement de la sauver. Il a tort sur la méthode, pas sur l'intention. Sa tragédie : il "gagne" le conflit mais perd sa femme, son fils, et son âme.</div>
+    </div>
+    <div class="char-card">
+      <div class="cname">Ismène</div>
+      <div class="crole">🟣 La Sœur · Le Conformisme</div>
+      <div class="cdesc">Belle, douce, "normale". Elle veut vivre, être aimée, ne pas faire de vagues. Refuse d'aider Antigone par peur. À la fin, tente de partager la faute — trop tard : Antigone refuse. Ismène incarne la <strong>résignation ordinaire</strong> face à l'injustice, ce qu'Anouilh ne condamne pas ouvertement — mais qu'Antigone méprise.</div>
+    </div>
+    <div class="char-card">
+      <div class="cname">Hémon</div>
+      <div class="crole">🔵 Le Fiancé · L'Amour pur</div>
+      <div class="cdesc">Fils de Créon, fiancé d'Antigone. Il l'aime <em>telle qu'elle est</em>, même sombre et difficile. Sa scène du matin avec Antigone est la seule scène de douceur de toute la pièce. Il choisit Antigone contre son père, et mourra sur son corps. <strong>L'amour absolu ne survit pas à la politique.</strong></div>
+    </div>
+    <div class="char-card">
+      <div class="cname">Le Chœur</div>
+      <div class="crole">⚪ Le Commentateur · La Voix d'Anouilh</div>
+      <div class="cdesc">Personnage hérité de la tragédie grecque. Il <strong>n'agit pas</strong>, il <em>commente</em>. Il explique la mécanique de la tragédie, décrit les personnages, philosophe sur le destin. C'est la voix la plus proche d'Anouilh lui-même. Rupture du 4e mur : il parle directement au public.</div>
+    </div>
+    <div class="char-card">
+      <div class="cname">La Nourrice</div>
+      <div class="crole">🟤 La Figure maternelle · L'Ordinaire</div>
+      <div class="cdesc">Vieille femme simple, affectueuse, qui ne comprend rien à la politique. Elle veut qu'Antigone mange, dorme, rentre à la maison. Elle représente le <strong>monde rassurant de l'enfance</strong> qu'Antigone doit quitter pour accomplir son destin. Sa trivialité contraste violemment avec le tragique.</div>
+    </div>
+    <div class="char-card">
+      <div class="cname">Les Gardes</div>
+      <div class="crole">⬛ La Banalité · L'Instrument</div>
+      <div class="cdesc">Ils parlent de leurs problèmes d'argent, jouent aux cartes, pensent à leur avancement. Ils arrêtent Antigone sans comprendre pourquoi. <strong>Allusion directe aux collaborateurs ordinaires</strong> sous l'Occupation : des gens normaux qui font des choses terribles par conformisme et obéissance.</div>
+    </div>
+    <div class="char-card">
+      <div class="cname">Eurydice</div>
+      <div class="crole">🟠 La Reine · Le Silence</div>
+      <div class="cdesc">Femme de Créon, presque absente. Elle tricote. Quand le Messager annonce la mort de Hémon, elle sort silencieusement — et se suicide sans un mot. Son silence est une condamnation muette de Créon. <strong>La mort silencieuse vaut parfois plus qu'un long discours.</strong></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:20px">
+    <div class="ctitle">🔗 Relations entre personnages</div>
+    <table>
+      <tr><th>Personnage</th><th>Lien avec Antigone</th><th>Fonction dramatique</th></tr>
+      <tr><td><strong>Créon</strong></td><td>Oncle / opposant</td><td>Représente le pouvoir, la raison d'État</td></tr>
+      <tr><td><strong>Ismène</strong></td><td>Sœur / foil</td><td>Miroir inversé d'Antigone : la vie choisie</td></tr>
+      <tr><td><strong>Hémon</strong></td><td>Fiancé</td><td>L'amour impossible, la jeunesse sacrifiée</td></tr>
+      <tr><td><strong>Nourrice</strong></td><td>Figure maternelle</td><td>Le monde de l'enfance, la vie simple</td></tr>
+      <tr><td><strong>Le Chœur</strong></td><td>Témoin extérieur</td><td>Distanciation, commentaire philosophique</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════ THÈMES ═══════════════════ -->
+
+<div id="themes" class="section">
+  <h2 class="stitle">⚖️ Les Grands Thèmes</h2>
+
+  <div class="accordion">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      ⚔️ &nbsp; La Liberté contre l'Ordre
+      <span class="acc-arrow">▼</span>
+    </div>
+    <div class="acc-body">
+      <p>C'est le conflit central de la pièce. Antigone représente la <strong>liberté absolue</strong> — le droit de l'individu de suivre sa conscience contre les lois de l'État. Créon représente l'<strong>ordre nécessaire</strong> — sans règles, la cité s'effondre.</p>
+      <p>Anouilh ne tranche pas. Il montre que les deux ont raison et que c'est précisément cette impossibilité de réconciliation qui fait la tragédie. <em>La liberté absolue est incompatible avec la vie en société.</em></p>
+      <div class="highlight">
+        <strong>Pour le commentaire :</strong> c'est le thème principal à mobiliser pour analyser le dialogue Créon/Antigone.
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      💀 &nbsp; La Mort comme acte de liberté
+      <span class="acc-arrow">▼</span>
+    </div>
+    <div class="acc-body">
+      <p>Pour Antigone, <strong>mourir est un choix</strong>, pas une punition. Elle choisit la mort plutôt qu'une vie de compromis. Cette idée rapproche Antigone de l'<em>existentialisme</em> de Sartre et Camus (contemporains d'Anouilh) : l'homme se définit par ses choix, même si ce choix est la mort.</p>
+      <p>Créon lui offre la vie — elle refuse. Ce refus est son acte de liberté ultime. En mourant, Antigone prouve qu'on ne peut pas la soumettre.</p>
+      <blockquote>« Je suis là pour te dire non et mourir. »<span class="bq-src">— Antigone</span></blockquote>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      👑 &nbsp; Le Pouvoir et ses compromis
+      <span class="acc-arrow">▼</span>
+    </div>
+    <div class="acc-body">
+      <p>Créon révèle à Antigone un secret : il a lui-même hésité avant de prendre le pouvoir. Gouverner, c'est <strong>accepter de se salir les mains</strong>. Il a dû choisir lequel des frères serait le "bon" mort — et c'est presque arbitraire.</p>
+      <p>C'est une vision très sombre et réaliste du pouvoir : le chef n'est pas vertueux, il est <em>nécessaire</em>. La pièce questionne donc la légitimité de l'autorité : peut-on obéir à un pouvoir dont les décisions sont arbitraires ?</p>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      🏛️ &nbsp; Loi divine vs Loi humaine
+      <span class="acc-arrow">▼</span>
+    </div>
+    <div class="acc-body">
+      <p>Hérité directement de Sophocle. Dans la version antique, Antigone invoque explicitement les lois des dieux (enterrer les morts est un devoir sacré). Chez Anouilh, la dimension religieuse est <strong>secondaire</strong> : ce n'est pas tant les dieux qu'Antigone défend, c'est sa <em>propre loi intérieure</em>, sa conscience morale.</p>
+      <p>Cette modernisation est importante : Anouilh laïcise le mythe. Le conflit n'est plus théologique mais éthique et existentiel.</p>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      🎭 &nbsp; La Tragédie comme fatalité
+      <span class="acc-arrow">▼</span>
+    </div>
+    <div class="acc-body">
+      <p>Le Chœur explique la différence entre le drame et la tragédie : dans le drame, on peut espérer que les choses tournent autrement. Dans la tragédie, <strong>tout est déjà joué</strong>. Il n'y a pas d'espoir, pas de suspense — et paradoxalement, c'est plus reposant : on est "entre soi", tous complices du même destin inéluctable.</p>
+      <p>Ce rapport à la fatalité est central : les personnages <em>savent</em> ce qui va arriver. Antigone sait qu'elle va mourir. Elle y va quand même. C'est ça, l'héroïsme tragique.</p>
+      <div class="highlight">
+        <strong>Pour l'oral :</strong> le discours du Chœur sur la tragédie (début de pièce) est un passage clé à citer et analyser.
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      🇫🇷 &nbsp; L'allégorie politique — Résistance & Collaboration
+      <span class="acc-arrow">▼</span>
+    </div>
+    <div class="acc-body">
+      <p>La lecture allégorique est inévitable. Jouée en 1944 à Paris occupée :</p>
+      <ul>
+        <li><strong>Antigone</strong> = la France libre, les résistants, ceux qui refusent de plier</li>
+        <li><strong>Créon</strong> = le régime de Vichy, les collaborateurs "raisonnables" qui pensent avoir raison de négocier avec l'ennemi</li>
+        <li><strong>Les Gardes</strong> = les petits fonctionnaires qui "ne font qu'obéir"</li>
+      </ul>
+      <p>Mais <strong>la pièce a été applaudie des deux côtés</strong> : les résistants y voyaient un appel à la révolte, les collaborateurs y voyaient une critique de l'idéalisme stérile. Cette ambiguïté est voulue et constitue le génie d'Anouilh.</p>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      💔 &nbsp; L'Idéal contre la Vie ordinaire
+      <span class="acc-arrow">▼</span>
+    </div>
+    <div class="acc-body">
+      <p>Créon propose à Antigone une vie "heureuse" : se marier avec Hémon, avoir des enfants, vieillir normalement. Pour Antigone, c'est une insulte. Elle ne veut pas d'une vie <em>"médiocre"</em>, faite de bonheurs ordinaires. Elle veut un absolu que le monde réel ne peut pas lui offrir.</p>
+      <p>C'est un thème romantique : <strong>l'impossible tension entre l'idéal et le réel</strong>. Le monde réel est trop petit pour Antigone.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ EXTRAITS ANALYSÉS ═══════════════════ -->
+
+<div id="extraits" class="section">
+  <h2 class="stitle">🔍 Extraits & Analyses littéraires</h2>
+
+  <div class="card">
+    <div class="ctitle">📌 Extrait 1 — Le discours du Chœur sur la Tragédie</div>
+    <div class="extract-box">
+      <div class="extract-text">
+        «&nbsp;<span class="annotation">Dans la tragédie<span class="ann-label">Sujet = réflexion sur le genre</span></span>, on est tranquille. D'abord, on est <span class="annotation">entre soi<span class="ann-label">Communauté tragique : acteurs et spectateurs complices</span></span>. On est tous <span class="annotation">innocents<span class="ann-label">Paradoxe : personne n'est vraiment responsable</span></span> en somme ! Ce n'est pas parce qu'il y en a un qui tue et l'autre qui est tué. C'est une question de <span class="annotation">distribution<span class="ann-label">Métaphore théâtrale : les rôles sont assignés</span></span>. Et puis, surtout, c'est reposant, la tragédie, <span class="annotation">parce qu'on sait qu'il n'y a plus d'espoir<span class="ann-label">Paradoxe central : l'absence d'espoir = le repos</span></span>, le sale espoir ; qu'on est pris, qu'on est enfin pris comme un rat, avec tout le ciel sur son dos, et qu'on n'a plus qu'à crier, — <span class="annotation">pas à gémir, à crier<span class="ann-label">Distinction entre lamentation et cri de révolte</span></span>.&nbsp;»
+      </div>
+    </div>
+    <p><strong>Analyse :</strong> Ce discours est une <em>métatexte</em> — le Chœur parle de la pièce elle-même depuis l'intérieur. Anouilh y expose sa conception de la tragédie :</p>
+    <ul>
+      <li><strong>La fatalité rassurante</strong> : sans espoir = sans angoisse. Paradoxe central.</li>
+      <li><strong>La distribution des rôles</strong> : personne n'est vraiment coupable, les personnages jouent leur rôle préétabli.</li>
+      <li><strong>Le cri vs la plainte</strong> : la tragédie est un refus actif, pas une résignation passive.</li>
+    </ul>
+    <div class="highlight green">
+      <strong>Procédés à noter :</strong> Métaphore théâtrale ("distribution"), oxymore ("reposant… parce qu'il n'y a plus d'espoir"), rupture du 4e mur, ton direct et familier ("en somme", "le sale espoir").
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ctitle">📌 Extrait 2 — Antigone face à Créon : le refus</div>
+    <div class="extract-box">
+      <div class="extract-text">
+        «&nbsp;CRÉON : <span class="annotation">Pourquoi<span class="ann-label">Question rhétorique : Créon cherche une raison rationnelle</span></span> ?<br>
+        ANTIGONE : Je ne sais pas pourquoi.<br>
+        CRÉON : Non, tu ne sais pas. Tu as couru à la mort, <span class="annotation">les yeux fermés<span class="ann-label">Métaphore : action instinctive, aveugle — non raisonnée</span></span>. [...]<br>
+        ANTIGONE : <span class="annotation">Peut-être, mais moi, je peux encore dire non à tout ce que je n'aime pas<span class="ann-label">Formulation du refus existentiel : liberté de rejeter</span></span>, et je suis seul juge. Et vous, vous pouvez, <span class="annotation">avec votre couronne<span class="ann-label">Ironie : le pouvoir symbolisé par l'objet matériel</span></span>, avec vos gardes, avec votre attirail — vous pouvez me faire mourir parce que vous avez dit oui, mais vous ne pouvez pas m'empêcher de vous juger.&nbsp;»
+      </div>
+    </div>
+    <p><strong>Analyse :</strong></p>
+    <ul>
+      <li><strong>"Je ne sais pas pourquoi"</strong> : Antigone n'a pas d'argument rationnel. Son action est <em>instinctive, viscérale</em> — ce qui la rend plus forte que tout argument.</li>
+      <li><strong>Le "non"</strong> : le refus est le seul acte de liberté qu'on ne peut pas lui prendre. Même condamnée à mort, elle garde le droit de juger.</li>
+      <li><strong>Inversion du rapport de force</strong> : Créon a la couronne et les gardes — mais Antigone a le jugement moral.</li>
+    </ul>
+    <div class="highlight green">
+      <strong>Procédés :</strong> anaphore ("vous pouvez… vous ne pouvez pas"), chiasme implicite (pouvoir / impouvoir), lexique du jugement, phrases courtes et tranchantes.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ctitle">📌 Extrait 3 — Créon justifie le pouvoir</div>
+    <div class="extract-box">
+      <div class="extract-text">
+        «&nbsp;Quelle est la <span class="annotation">recette<span class="ann-label">Métaphore culinaire : le pouvoir vu comme un art pratique</span></span>, tu penses ? Tu l'aurais peut-être appris toi aussi si tu avais eu le temps. <span class="annotation">Le matin où l'on se lève roi<span class="ann-label">Formule frappante : le pouvoir est une prise de fonction banale</span></span>, il s'agit de faire quelque chose de cette royauté. [...] Et on a beau faire, il y a toujours un <span class="annotation">matin où cela ne va plus<span class="ann-label">Aveu de l'échec inévitable du gouvernement</span></span>. C'est tout. C'est la vie.&nbsp;»
+      </div>
+    </div>
+    <p><strong>Analyse :</strong> Créon ici n'est pas un tyran qui revendique le pouvoir. Il est <em>fatigué</em>, lucide, presque désabusé. Le pouvoir est pour lui une charge, pas un privilège. Cette humanisation de Créon est une innovation fondamentale d'Anouilh par rapport à Sophocle.</p>
+    <div class="highlight green">
+      <strong>Procédés :</strong> ton familier et oral, métaphore culinaire ("recette"), généralisation philosophique ("c'est la vie"), structure binaire (matin du roi / matin où cela ne va plus).
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ PROCÉDÉS ═══════════════════ -->
+
+<div id="procedes" class="section">
+  <h2 class="stitle">✒️ Procédés stylistiques & Outils littéraires</h2>
+
+  <div class="card">
+    <div class="ctitle">📖 Les procédés clés à connaître pour l'éval</div>
+    <p style="color:var(--stone); font-size:.95rem; margin-bottom:16px;">Survole la définition, mémorise l'exemple tiré de la pièce.</p>
+  </div>
+
+  <div class="proc-card">
+    <div class="proc-name">⚡ L'Antithèse</div>
+    <div class="proc-def">Opposition de deux idées, deux images ou deux termes contraires dans la même phrase ou passage.</div>
+    <div class="proc-ex">Ex : <em>"Toi tu veux vivre, moi je veux mourir."</em> — Opposition Ismène/Antigone. Ou encore Antigone "petite et brune" vs Ismène "grande et belle" (dès le prologue, Anouilh les oppose physiquement).</div>
+  </div>
+
+  <div class="proc-card">
+    <div class="proc-name">🔁 L'Anaphore</div>
+    <div class="proc-def">Répétition d'un mot ou groupe de mots au début de plusieurs propositions successives.</div>
+    <div class="proc-ex">Ex : <em>"Vous pouvez me faire mourir parce que vous avez dit oui, mais vous ne pouvez pas m'empêcher de vous juger."</em> — Répétition de "vous pouvez / vous ne pouvez pas" pour souligner l'opposition pouvoir/jugement moral.</div>
+  </div>
+
+  <div class="proc-card">
+    <div class="proc-name">🌀 L'Oxymore</div>
+    <div class="proc-def">Association de deux termes contradictoires qui forment une image paradoxale.</div>
+    <div class="proc-ex">Ex : Le Chœur dit que la tragédie est <em>"reposante"</em> précisément <em>"parce qu'il n'y a plus d'espoir"</em>. Le repos (positif) lié à l'absence d'espoir (négatif) = oxymore philosophique fondamental de la pièce.</div>
+  </div>
+
+  <div class="proc-card">
+    <div class="proc-name">🎭 La Métatextualité / Métatéâtralité</div>
+    <div class="proc-def">Quand un texte parle de lui-même, de sa propre nature de texte ou de théâtre.</div>
+    <div class="proc-ex">Ex : Tout le discours du Chœur au début est métatextuel — il explique au public qu'il regarde une tragédie, présente les acteurs comme des personnages qui vont "jouer leur histoire". Anouilh brise l'illusion théâtrale pour parler du théâtre depuis l'intérieur.</div>
+  </div>
+
+  <div class="proc-card">
+    <div class="proc-name">⬇️ Le Registre familier dans le tragique</div>
+    <div class="proc-def">Mélange volontaire de langue courante et de situations tragiques pour créer un effet de réel et de contraste.</div>
+    <div class="proc-ex">Ex : Les gardes jouent aux cartes, parlent de leurs fins de mois, tutoient Antigone. Les personnages boivent du café. Ce mélange des registres est une innovation radicale d'Anouilh : il "modernise" la tragédie grecque en l'ancrant dans le quotidien.</div>
+  </div>
+
+  <div class="proc-card">
+    <div class="proc-name">🔀 La Stichomythie</div>
+    <div class="proc-def">Dans la tragédie grecque : alternance de répliques très courtes entre deux personnages, créant un effet de joute verbale tendue.</div>
+    <div class="proc-ex">Ex : Le dialogue Créon/Antigone comporte de nombreuses stichomythies. Créon : <em>"Pourquoi ?"</em> — Antigone : <em>"Je ne sais pas."</em> — Créon : <em>"Non, tu ne sais pas."</em> Ces échanges courts créent une tension, une joute intellectuelle.</div>
+  </div>
+
+  <div class="proc-card">
+    <div class="proc-name">🔮 La Prolepse / Anticipation</div>
+    <div class="proc-def">Annonce de la suite des événements avant qu'ils se produisent.</div>
+    <div class="proc-ex">Ex : Le Chœur annonce dès le début que tout le monde va mourir. Toute la pièce joue sur ce savoir partagé entre le Chœur et le public. L'anticipation ôte le suspense et crée la tension tragique : <em>on sait ce qui va arriver, et on ne peut rien faire.</em></div>
+  </div>
+
+  <div class="proc-card">
+    <div class="proc-name">🪞 Le Personnage "foil"</div>
+    <div class="proc-def">Personnage secondaire qui, par contraste, met en valeur les traits du personnage principal.</div>
+    <div class="proc-ex">Ex : <strong>Ismène est le foil d'Antigone.</strong> Physiquement (belle vs brune), moralement (vie vs mort), idéologiquement (acceptation vs refus). Chaque fois qu'Ismène parle, elle met en relief l'absolutisme d'Antigone.</div>
+  </div>
+
+  <div class="card" style="margin-top:20px">
+    <div class="ctitle">📝 Verbes d'analyse à utiliser dans ta copie</div>
+    <div class="grid2">
+      <div>
+        <p><strong>Pour décrire les procédés :</strong></p>
+        <ul>
+          <li>Anouilh <em>use de / recourt à</em> l'antithèse pour…</li>
+          <li>Le Chœur <em>souligne / met en relief</em> que…</li>
+          <li>Cette métaphore <em>illustre / traduit</em>…</li>
+          <li>La répétition <em>insiste sur / martèle</em>…</li>
+        </ul>
+      </div>
+      <div>
+        <p><strong>Pour interpréter :</strong></p>
+        <ul>
+          <li>On peut interpréter ce passage comme…</li>
+          <li>Ce procédé <em>révèle / met en lumière</em>…</li>
+          <li>Anouilh <em>dénonce / interroge / questionne</em>…</li>
+          <li>Cette scène est emblématique de…</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ CITATIONS ═══════════════════ -->
+
+<div id="citations" class="section">
+  <h2 class="stitle">💬 Citations essentielles à mémoriser</h2>
+
+  <div class="card">
+    <div class="ctitle">🌑 Antigone — L'Absolu</div>
+    <blockquote>
+      « Je veux tout, tout de suite, et que ce soit entier — ou je refuse ! »
+      <span class="bq-src">— Antigone à Créon (dialogue central)</span>
+    </blockquote>
+    <p>➜ <strong>Citation fondamentale.</strong> Résume la philosophie d'Antigone en une phrase : l'absolu ou rien. Aucun compromis possible. C'est aussi une vision de l'adolescence, du refus de "grandir" dans un monde qui exige des concessions.</p>
+    <div class="badge">Thème : idéal vs réel</div><div class="badge">Thème : liberté</div>
+  </div>
+
+  <div class="card">
+    <div class="ctitle">🌑 Antigone — Le Refus de vivre à moitié</div>
+    <blockquote>
+      « Je suis là pour vous dire non et mourir. »
+      <span class="bq-src">— Antigone</span>
+    </blockquote>
+    <p>➜ Formulation lapidaire et absolue. Antigone réduit son rôle à l'essentiel : refus et mort. Deux syllabes, deux actes. La mort n'est pas une conséquence — elle est l'objectif.</p>
+    <div class="badge r">Thème : mort</div><div class="badge">Thème : liberté</div>
+  </div>
+
+  <div class="card">
+    <div class="ctitle">🎭 Le Chœur — La Tragédie</div>
+    <blockquote>
+      « Dans la tragédie, on est tranquille. D'abord, on est entre soi. On est tous innocents en somme ! »
+      <span class="bq-src">— Le Chœur, Prologue</span>
+    </blockquote>
+    <p>➜ <strong>Passage métatextuel majeur.</strong> Le Chœur définit la spécificité de la tragédie : la fatalité partagée crée une étrange solidarité. Personne n'est vraiment coupable car tout est déjà écrit. À opposer à la conception du drame où l'issue est incertaine.</p>
+    <div class="badge g">Thème : fatalité</div><div class="badge">Genre : métatexte</div>
+  </div>
+
+  <div class="card">
+    <div class="ctitle">👑 Créon — Le Réalisme politique</div>
+    <blockquote>
+      « On ne peut pas laisser les hommes faire ce qu'ils veulent. »
+      <span class="bq-src">— Créon</span>
+    </blockquote>
+    <p>➜ Justification de l'ordre autoritaire. Créon ne se présente pas comme tyrannique mais comme <em>nécessaire</em>. Sans règles strictes, la société s'effondre. C'est l'argument classique des gouvernants qui suspendent les libertés "pour le bien commun".</p>
+    <div class="badge">Thème : pouvoir</div><div class="badge b">Allégorie : Vichy</div>
+  </div>
+
+  <div class="card">
+    <div class="ctitle">👑 Créon — Sur le pouvoir</div>
+    <blockquote>
+      « Quelle est la recette, tu penses ? Tu l'aurais peut-être appris toi aussi si tu avais eu le temps. »
+      <span class="bq-src">— Créon à Antigone</span>
+    </blockquote>
+    <p>➜ Créon humanise le pouvoir : gouverner n'est pas une vocation, c'est une compétence qui s'apprend. Il sous-entend qu'Antigone, si elle avait gouverné, aurait compris les nécessités des compromis. C'est à la fois une attaque et une invitation.</p>
+    <div class="badge">Thème : pouvoir</div><div class="badge">Procédé : ironie</div>
+  </div>
+
+  <div class="card">
+    <div class="ctitle">🌹 Antigone — Sur la jeunesse</div>
+    <blockquote>
+      « Moi, je voulais être sûre de tout ce qui était beau. »
+      <span class="bq-src">— Antigone (fin)</span>
+    </blockquote>
+    <p>➜ Révèle une dimension plus intime de la révolte d'Antigone. Elle n'est pas seulement une militante ou une rebelle politique. Elle cherche la <em>beauté absolue</em>, la pureté — et le monde réel ne peut pas la lui offrir. C'est une lamentation sur l'impossibilité de l'idéal.</p>
+    <div class="badge">Thème : idéal</div><div class="badge r">Thème : mort</div>
+  </div>
+
+  <div class="card">
+    <div class="ctitle">⚪ Le Chœur — La fin</div>
+    <blockquote>
+      « Et voilà. Sans la petite Antigone, c'est vrai, ils auraient tous été bien tranquilles. »
+      <span class="bq-src">— Le Chœur, épilogue</span>
+    </blockquote>
+    <p>➜ Conclusion amère et distanciée. Le Chœur souligne avec ironie que la révolte d'Antigone n'a pas "servi à rien" — mais a tout détruit. Est-ce une critique de l'idéalisme ou un hommage à sa nécessité ? Anouilh laisse la question ouverte.</p>
+    <div class="badge g">Thème : fatalité</div><div class="badge">Procédé : ironie</div>
+  </div>
+</div>
+
+<!-- ═══════════════════ CONTEXTE ═══════════════════ -->
+
+<div id="contexte" class="section">
+  <h2 class="stitle">📜 Contexte historique & Littéraire</h2>
+
+  <div class="card">
+    <div class="ctitle">✍️ Jean Anouilh (1910–1987)</div>
+    <div class="grid2">
+      <div>
+        <div class="srow"><div class="skey">Naissance</div><div class="sval">Bordeaux, 23 juin 1910</div></div>
+        <div class="srow"><div class="skey">Mort</div><div class="sval">Lausanne, 3 octobre 1987</div></div>
+        <div class="srow"><div class="skey">Genre</div><div class="sval">Dramaturge (théâtre principalement)</div></div>
+        <div class="srow"><div class="skey">Ton</div><div class="sval">Cynique, mélancolique, lucide</div></div>
+        <div class="srow"><div class="skey">Pièces</div><div class="sval">Antigone, Becket, L'Alouette, La Répétition...</div></div>
+      </div>
+      <div>
+        <p>Anouilh classe lui-même ses pièces en "pièces noires" (pessimistes, sans happy end), "pièces roses" (légères), "pièces brillantes" et "pièces grinçantes". <strong>Antigone est une pièce noire.</strong></p>
+        <p>Son style : un mélange de langue soutenue et familière, une ironie constante, une méfiance envers tous les absolus — y compris l'absolu d'Antigone.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ctitle">🇩🇪 L'Occupation — Contexte historique</div>
+    <div class="timeline" style="margin-top:0">
+      <div class="titem">
+        <div class="tact">1940</div>
+        <p>Défaite de la France. Occupation nazie. Le gouvernement de Vichy (maréchal Pétain) collabore avec l'Allemagne.</p>
+      </div>
+      <div class="titem">
+        <div class="tact">1942</div>
+        <p>Anouilh écrit Antigone. La France est divisée entre collaborateurs et résistants.</p>
+      </div>
+      <div class="titem">
+        <div class="tact">4 février 1944</div>
+        <p>Création au Théâtre de l'Atelier, Paris. La censure allemande laisse passer la pièce — sans en voir l'ambiguïté politique.</p>
+      </div>
+      <div class="titem">
+        <div class="tact">Après la Libération</div>
+        <p>Anouilh est accusé de collaboration par certains (la pièce a été vue comme pro-Vichy). La polémique dure des années. Anouilh a toujours refusé d'expliquer son intention.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ctitle">🏛️ Sophocle (441 av. J.-C.) vs Anouilh (1944)</div>
+    <table>
+      <tr><th>Point de comparaison</th><th>Sophocle</th><th>Anouilh</th></tr>
+      <tr><td>Époque</td><td>Ve siècle av. J.-C. — Athènes</td><td>1944 — Paris occupé</td></tr>
+      <tr><td>Dimension religieuse</td><td>Centrale : lois des dieux vs lois des hommes</td><td>Effacée : loi intérieure, morale</td></tr>
+      <tr><td>Créon</td><td>Tyran arrogant, coupable</td><td>Homme raisonnable, presque sympathique</td></tr>
+      <tr><td>Antigone</td><td>Héroïne pieuse, sainte</td><td>Rebelle existentialiste, "petite maigre"</td></tr>
+      <tr><td>Langue</td><td>Vers, langue soutenue, chants choraux</td><td>Prose, langue mêlée soutenu/familier</td></tr>
+      <tr><td>Structure</td><td>5 épisodes + stasima (chants du Chœur)</td><td>Un acte continu, Chœur modernisé</td></tr>
+      <tr><td>Message</td><td>Les dieux punissent l'orgueil (hubris)</td><td>La tragédie est un mécanisme sans issue</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="ctitle">📚 Courants littéraires liés</div>
+    <div class="grid2">
+      <div class="highlight">
+        <strong>Existentialisme</strong> (Sartre, Camus) : l'homme se définit par ses choix. Antigone choisit librement de mourir — son acte est un acte d'existence pure.
+      </div>
+      <div class="highlight">
+        <strong>Théâtre de l'Absurde</strong> (Beckett, Ionesco) : connexion plus légère, mais le Chœur d'Anouilh qui parle de la fatalité rappelle l'absurde : les personnages jouent des rôles sans pouvoir s'en extraire.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ DISSERTATION ═══════════════════ -->
+
+<div id="dissertation" class="section">
+  <h2 class="stitle">📝 Méthode & Plans de Dissertation</h2>
+
+  <div class="card">
+    <div class="ctitle">🛠️ Méthode générale — Rappel</div>
+    <ol>
+      <li><strong>Introduction</strong> : accroche → présentation de l'œuvre → problématique → annonce du plan</li>
+      <li><strong>Développement</strong> : 2 ou 3 parties, chacune avec 2-3 sous-parties. Chaque argument = citation + analyse + lien à la problématique</li>
+      <li><strong>Conclusion</strong> : bilan → réponse à la problématique → ouverture (autre œuvre, autre angle)</li>
+    </ol>
+    <div class="highlight" style="margin-top:14px">
+      <strong>Règle d'or :</strong> chaque paragraphe = 1 idée + 1 exemple textuel + 1 analyse du procédé + 1 lien à la problématique.
+    </div>
+  </div>
+
+  <div class="plan-part">
+    <div class="plan-header">📋 Sujet 1 — "Antigone est-elle une héroïne ?"</div>
+    <div class="plan-body">
+      <div class="plan-arg">
+        <div class="arg-title">I — Oui, Antigone possède les qualités de l'héroïne tragique</div>
+        <ul>
+          <li>Courage absolu face à la mort annoncée (elle sait et y va quand même)</li>
+          <li>Fidélité à ses valeurs sans compromis (le refus répété)</li>
+          <li>Sacrifice pour une cause supérieure (la loi morale / la loi divine)</li>
+        </ul>
+      </div>
+      <div class="plan-arg">
+        <div class="arg-title">II — Mais Anouilh complexifie et humanise cette héroïne</div>
+        <ul>
+          <li>Antigone avoue ne pas savoir pourquoi elle agit : l'héroïsme sans raison</li>
+          <li>Sa révolte est aussi une fuite du monde adulte / de la vie ordinaire</li>
+          <li>Elle n'est pas une sainte (elle est froide, méprisante envers Ismène)</li>
+        </ul>
+      </div>
+      <div class="plan-arg">
+        <div class="arg-title">III — L'héroïsme tragique est-il vraiment utile ?</div>
+        <ul>
+          <li>Sa mort ne change rien : Polynice reste mort, Thèbes ne change pas</li>
+          <li>Elle entraîne avec elle Hémon et Eurydice — victimes collatérales</li>
+          <li>Créon a "gagné" mais tout perdu : le héros peut-il "gagner" dans la tragédie ?</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="plan-part">
+    <div class="plan-header">📋 Sujet 2 — "Créon est-il le vrai coupable ?"</div>
+    <div class="plan-body">
+      <div class="plan-arg">
+        <div class="arg-title">I — Créon prend une décision arbitraire et cruelle</div>
+        <ul>
+          <li>Refuser la sépulture est une décision purement politique, pas morale</li>
+          <li>Il admet lui-même que le choix entre les deux frères était presque aléatoire</li>
+          <li>Il condamne sa propre nièce à mort sans vraiment de nécessité</li>
+        </ul>
+      </div>
+      <div class="plan-arg">
+        <div class="arg-title">II — Mais Créon est un homme de devoir, pas un tyran</div>
+        <ul>
+          <li>Il tente de sauver Antigone — trois fois il lui offre la vie</li>
+          <li>Il gouverne par devoir, pas par goût du pouvoir</li>
+          <li>Ses arguments sur l'ordre et la nécessité ne sont pas déraisonnables</li>
+        </ul>
+      </div>
+      <div class="plan-arg">
+        <div class="arg-title">III — La tragédie dépasse la question de la culpabilité</div>
+        <ul>
+          <li>Le Chœur dit que "tout le monde est innocent" dans la tragédie</li>
+          <li>La vraie "coupable" : la fatalité, le mécanisme tragique lui-même</li>
+          <li>Anouilh refuse le manichéisme (bon/méchant) — c'est sa modernité</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="plan-part">
+    <div class="plan-header">📋 Sujet 3 — "Antigone est-elle une pièce politique ?"</div>
+    <div class="plan-body">
+      <div class="plan-arg">
+        <div class="arg-title">I — Une allégorie de la Résistance évidente</div>
+        <ul>
+          <li>Jouée en 1944 : le contexte de l'Occupation s'impose</li>
+          <li>Antigone = refus / résistance ; Créon = collaboration raisonnée</li>
+          <li>Les Gardes = fonctionnaires ordinaires du régime</li>
+        </ul>
+      </div>
+      <div class="plan-arg">
+        <div class="arg-title">II — Mais Anouilh brouille les pistes volontairement</div>
+        <ul>
+          <li>Créon n'est pas un méchant — on peut le comprendre</li>
+          <li>Antigone n'a pas de "programme politique" — elle dit "je ne sais pas pourquoi"</li>
+          <li>La pièce a été applaudie des deux côtés (résistants ET collaborateurs)</li>
+        </ul>
+      </div>
+      <div class="plan-arg">
+        <div class="arg-title">III — Au-delà du politique : une tragédie universelle</div>
+        <ul>
+          <li>Le conflit idéal/réel dépasse le contexte de 1944</li>
+          <li>La pièce interroge toute forme de pouvoir, pas seulement Vichy</li>
+          <li>Elle est jouée dans le monde entier dans des contextes très différents</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ctitle">💡 Formules d'introduction et de transition</div>
+    <div class="grid2">
+      <div>
+        <p><strong>Accroches possibles :</strong></p>
+        <ul>
+          <li>Commencer par la citation du Chœur sur la tragédie</li>
+          <li>Évoquer le contexte historique (1944, Paris occupé)</li>
+          <li>Partir du mythe antique de Sophocle pour montrer la réécriture d'Anouilh</li>
+        </ul>
+      </div>
+      <div>
+        <p><strong>Transitions :</strong></p>
+        <ul>
+          <li>"Cependant, cette lecture mérite d'être nuancée…"</li>
+          <li>"Mais Anouilh complexifie ce tableau en…"</li>
+          <li>"Au-delà de cet aspect, la pièce interroge aussi…"</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ FICHE SYNTHÈSE ═══════════════════ -->
+
+<div id="fiche" class="section">
+  <h2 class="stitle">📋 Fiche de Synthèse — L'essentiel</h2>
+
+  <div class="card">
+    <div class="ctitle">📌 Données fondamentales</div>
+    <div class="srow"><div class="skey">Auteur</div><div class="sval">Jean Anouilh (1910–1987)</div></div>
+    <div class="srow"><div class="skey">Date création</div><div class="sval">4 février 1944, Théâtre de l'Atelier, Paris</div></div>
+    <div class="srow"><div class="skey">Date écriture</div><div class="sval">1942 (sous l'Occupation)</div></div>
+    <div class="srow"><div class="skey">Genre</div><div class="sval">Tragédie moderne — "pièce noire" selon Anouilh</div></div>
+    <div class="srow"><div class="skey">Source</div><div class="sval">Mythe d'Antigone (Sophocle, ~441 av. J.-C.)</div></div>
+    <div class="srow"><div class="skey">Structure</div><div class="sval">Un acte continu + Chœur + Prologue + Épilogue</div></div>
+    <div class="srow"><div class="skey">Registre</div><div class="sval">Tragique, lyrique, familier (mélange voulu)</div></div>
+    <div class="srow"><div class="skey">Contexte</div><div class="sval">Occupation nazie — allégorie Résistance/Collaboration</div></div>
+  </div>
+
+  <div class="card">
+    <div class="ctitle">⚔️ Le Grand Tableau des Oppositions</div>
+    <table>
+      <tr><th>ANTIGONE</th><th style="text-align:center; color:var(--stone)">⚡</th><th style="text-align:right">CRÉON</th></tr>
+      <tr><td>Idéalisme</td><td style="text-align:center; color:var(--gold-d)">vs</td><td style="text-align:right">Pragmatisme</td></tr>
+      <tr><td>Tout ou rien</td><td style="text-align:center; color:var(--gold-d)">vs</td><td style="text-align:right">Le compromis nécessaire</td></tr>
+      <tr><td>Mort choisie</td><td style="text-align:center; color:var(--gold-d)">vs</td><td style="text-align:right">Vie ordinaire</td></tr>
+      <tr><td>Loi morale intérieure</td><td style="text-align:center; color:var(--gold-d)">vs</td><td style="text-align:right">Loi de l'État</td></tr>
+      <tr><td>L'absolu</td><td style="text-align:center; color:var(--gold-d)">vs</td><td style="text-align:right">Le réel imparfait</td></tr>
+      <tr><td>Résistance (allégorie)</td><td style="text-align:center; color:var(--gold-d)">vs</td><td style="text-align:right">Collaboration raisonnée</td></tr>
+      <tr><td>Jeunesse / Pureté</td><td style="text-align:center; color:var(--gold-d)">vs</td><td style="text-align:right">Expérience / Corruption</td></tr>
+      <tr><td>Petite, brune, sombre</td><td style="text-align:center; color:var(--gold-d)">vs</td><td style="text-align:right">Vieux, fatigué, lucide</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="ctitle">💀 Destin de chaque personnage</div>
+    <table>
+      <tr><th>Personnage</th><th>Destin final</th></tr>
+      <tr><td><strong>Antigone</strong></td><td>Se pend dans la grotte où elle était emmurée</td></tr>
+      <tr><td><strong>Hémon</strong></td><td>Se tue sur son épée en découvrant Antigone morte</td></tr>
+      <tr><td><strong>Eurydice</strong></td><td>Se suicide silencieusement en apprenant la mort de Hémon</td></tr>
+      <tr><td><strong>Créon</strong></td><td>Survit, seul, avec son page — victoire creuse</td></tr>
+      <tr><td><strong>Ismène</strong></td><td>Survit — sa vie "normale" continue</td></tr>
+      <tr><td><strong>Les Gardes</strong></td><td>Continuent à jouer aux cartes, indifférents</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="ctitle">🧠 Formules-clés pour l'analyse</div>
+    <ul>
+      <li>"Anouilh <strong>modernise le mythe</strong> antique en laïcisant le conflit…"</li>
+      <li>"La pièce est une <strong>réécriture</strong> du mythe de Sophocle dans laquelle…"</li>
+      <li>"Le Chœur remplit une fonction de <strong>distanciation</strong> (Brecht) en…"</li>
+      <li>"Antigone incarne l'<strong>idéalisme absolu</strong>, Créon le <strong>réalisme politique</strong>…"</li>
+      <li>"L'<strong>ambiguïté politique</strong> voulue par Anouilh permet une double lecture…"</li>
+      <li>"La <strong>tragédie moderne</strong> d'Anouilh se caractérise par le mélange des registres…"</li>
+      <li>"Contrairement à Sophocle, Anouilh n'oppose pas le <strong>bien au mal</strong> mais deux formes de raison…"</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════════════ QUIZ ═══════════════════ -->
+
+<div id="quiz" class="section">
+  <h2 class="stitle">❓ Quiz complet — 15 questions</h2>
+  <p style="color:var(--stone); margin-bottom:26px;">Clique sur une réponse pour voir l'explication.</p>
+  <div id="quiz-container"></div>
+  <div id="score-box"></div>
+  <button class="btn" onclick="resetQuiz()">🔄 Recommencer</button>
+</div>
+
+</main>
+
+<script>
+// NAV
+function show(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.currentTarget.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ACCORDION
+function toggleAcc(header) {
+  const body = header.nextElementSibling;
+  const arrow = header.querySelector('.acc-arrow');
+  const isOpen = body.classList.contains('open');
+  document.querySelectorAll('.acc-body').forEach(b => b.classList.remove('open'));
+  document.querySelectorAll('.acc-arrow').forEach(a => a.style.transform = '');
+  if (!isOpen) {
+    body.classList.add('open');
+    arrow.style.transform = 'rotate(180deg)';
+  }
+}
+
+// QUIZ
+const questions = [
+  { q: "Qui est l'auteur d'Antigone (version 1944) ?", opts: ["Albert Camus", "Jean Anouilh", "Jean-Paul Sartre", "Molière"], c: 1, exp: "Jean Anouilh (1910-1987) a écrit cette Antigone en 1942, créée en 1944 au Théâtre de l'Atelier à Paris." },
+  { q: "Pourquoi Créon interdit-il d'enterrer Polynice ?", opts: ["Par vengeance personnelle", "Parce que Polynice était traître à Thèbes", "Pour punir Antigone", "Par ordre des dieux"], c: 1, exp: "Polynice a attaqué Thèbes avec une armée étrangère. Créon, pour des raisons politiques, décide d'en faire un exemple — même si c'est presque arbitraire." },
+  { q: "Comment meurt Antigone ?", opts: ["Décapitée par les gardes", "Elle se pend dans la grotte", "Poignardée par Créon", "De faim et de soif"], c: 1, exp: "Antigone, emmurée vivante dans une grotte, s'est pendue avec sa propre ceinture avant de mourir de faim." },
+  { q: "Quel personnage est le 'foil' (miroir inversé) d'Antigone ?", opts: ["Hémon", "Eurydice", "Ismène", "La Nourrice"], c: 2, exp: "Ismène est physiquement et moralement l'inverse d'Antigone : belle/brune, résignée/révoltée, vie/mort. Elle sert à mettre en valeur l'absolutisme d'Antigone par contraste." },
+  { q: "Quel est le rôle du Chœur dans la pièce ?", opts: ["Il aide Antigone à enterrer son frère", "Il est l'avocat d'Antigone devant Créon", "Il commente l'action sans intervenir — voix d'Anouilh", "Il représente le peuple de Thèbes en révolte"], c: 2, exp: "Le Chœur est hérité de la tragédie grecque antique. Chez Anouilh, il commente, philosophe, explique sans jamais agir. C'est la voix la plus proche d'Anouilh lui-même." },
+  { q: "Que révèle Créon à Antigone sur ses deux frères ?", opts: ["Qu'Étéocle voulait aussi enterrer Polynice", "Que Polynice était un homme médiocre et violent", "Que les dieux lui ont ordonné de punir Polynice", "Qu'Antigone est adoptée"], c: 1, exp: "Créon révèle que Polynice n'était pas un héros — c'était un homme violent et raté. L'enjeu : Antigone dit que ça ne change rien. Elle n'agit pas pour l'homme mais pour un principe." },
+  { q: "Qu'arrive-t-il à Hémon ?", opts: ["Il épouse Ismène après la mort d'Antigone", "Il fuit Thèbes", "Il se tue sur son épée en découvrant Antigone morte", "Il devient roi de Thèbes"], c: 2, exp: "Hémon entre de force dans la grotte, retrouve Antigone morte, crache au visage de son père Créon qui tente de l'approcher, et se poignarde." },
+  { q: "Pourquoi Anouilh fait-il parler les gardes en langage familier ?", opts: ["Par manque de talent stylistique", "Pour montrer la banalité du mal — des exécutants ordinaires", "Parce que c'est une pièce comique", "Pour plaire au public populaire"], c: 1, exp: "Les gardes qui jouent aux cartes et pensent à leurs fins de mois sont une allusion aux collaborateurs ordinaires sous l'Occupation : des gens normaux qui font des choses terribles par conformisme." },
+  { q: "Quelle est la différence principale entre l'Antigone de Sophocle et celle d'Anouilh ?", opts: ["Chez Anouilh, Antigone survit", "Chez Anouilh, Créon est un tyran clairement méchant", "Chez Anouilh, le conflit est éthique et existentiel, pas religieux", "Chez Anouilh, Ismène aide finalement Antigone"], c: 2, exp: "Sophocle oppose les lois divines aux lois humaines (enjeu religieux). Anouilh laïcise le mythe : Antigone suit sa propre loi intérieure, pas les dieux. Le conflit devient existentiel." },
+  { q: "Qu'est-ce qu'un 'oxymore' ? Donnez l'exemple d'Antigone.", opts: ["Une répétition. Ex : 'Je refuse, je refuse, je refuse'", "Une association paradoxale. Ex : 'reposant parce qu'il n'y a plus d'espoir'", "Une métaphore. Ex : 'la couronne de Créon'", "Une ellipse. Ex : 'Elle est morte.'"], c: 1, exp: "L'oxymore associe deux termes contradictoires. Le Chœur dit que la tragédie est 'reposante' parce qu'il n'y a 'plus d'espoir' — repos (positif) + absence d'espoir (négatif) = oxymore philosophique fondamental." },
+  { q: "Qu'est-ce que la métatextualité dans Antigone ?", opts: ["Le fait qu'Antigone parle de sa propre mort", "Quand le Chœur parle de la pièce depuis l'intérieur, au public", "La dimension politique de la pièce", "Le monologue final de Créon"], c: 1, exp: "La métatextualité, c'est quand un texte parle de sa propre nature. Le Chœur au début présente les personnages comme des acteurs qui vont 'jouer leur histoire', s'adresse directement au public — Anouilh brise l'illusion théâtrale." },
+  { q: "Quelle pièce d'Anouilh est la source directe d'Antigone ?", opts: ["L'Antigone de Sophocle (VIIe s. av. J.-C.)", "L'Antigone de Sophocle (~441 av. J.-C.)", "L'Antigone de Racine (1667)", "L'Antigone de Brecht (1948)"], c: 1, exp: "Anouilh s'inspire de l'Antigone de Sophocle, dramaturge grec du Ve siècle av. J.-C. (~441 av. J.-C.). Il reprend le mythe et les personnages mais les transforme profondément." },
+  { q: "Pourquoi Créon est-il une figure tragique, pas seulement un antagoniste ?", opts: ["Parce qu'il reconnaît avoir tort trop tard", "Parce qu'il survit mais perd femme, fils et âme — il 'gagne' et tout s'effondre", "Parce qu'il est forcé d'obéir aux dieux", "Parce qu'il aime secrètement Antigone"], c: 1, exp: "Créon 'gagne' : Antigone est condamnée. Mais sa femme Eurydice et son fils Hémon meurent. Il se retrouve seul, avec sa couronne vide. Sa victoire est sa défaite. C'est la définition même du tragique." },
+  { q: "Quelle est la citation la plus emblématique d'Antigone ?", opts: ["'Je veux tout, tout de suite, et que ce soit entier — ou je refuse !'", "'Mieux vaut vivre que mourir pour des idéaux.'", "'Obéir, c'est la seule sagesse.'", "'Polynice méritait une sépulture.'"], c: 0, exp: "Cette citation résume la philosophie d'Antigone : l'absolu ou rien. Aucun compromis possible. C'est le cœur de la pièce." },
+  { q: "Comment la pièce pouvait-elle être lue FAVORABLEMENT par des collaborateurs ?", opts: ["Créon représente la France libre et est glorifié", "Créon, l'homme de l'ordre nécessaire, avait raison contre l'idéalisme stérile d'Antigone", "Les gardes symbolisent la Résistance", "Anouilh était ouvertement pro-nazi"], c: 1, exp: "Certains collaborateurs lisaient Créon comme le gouvernant réaliste qui avait raison. Antigone = l'idéaliste qui sacrifie des vies pour rien. Anouilh n'a jamais tranché — l'ambiguïté est voulue." }
+];
+
+let answered = [];
+
+function buildQuiz() {
+  const c = document.getElementById('quiz-container');
+  c.innerHTML = '';
+  answered = new Array(questions.length).fill(false);
+  document.getElementById('score-box').style.display = 'none';
+
+  questions.forEach((q, qi) => {
+    const d = document.createElement('div');
+    d.className = 'qcard';
+    d.id = `q${qi}`;
+    d.innerHTML = `<div class="qtext">${qi+1}. ${q.q}</div>
+      <div class="opts">${q.opts.map((o,oi)=>`<button class="opt" onclick="answer(${qi},${oi})">${o}</button>`).join('')}</div>
+      <div class="q-explain" id="ex${qi}">${q.exp}</div>`;
+    c.appendChild(d);
+  });
+}
+
+function answer(qi, chosen) {
+  if (answered[qi]) return;
+  answered[qi] = true;
+  const q = questions[qi];
+  const btns = document.querySelectorAll(`#q${qi} .opt`);
+  btns[q.c].classList.add('correct');
+  if (chosen !== q.c) btns[chosen].classList.add('wrong');
+  btns.forEach(b => b.disabled = true);
+  document.getElementById(`ex${qi}`).classList.add('show');
+
+  if (answered.every(Boolean)) {
+    const rights = document.querySelectorAll('.opt.correct').length - document.querySelectorAll('.opt.wrong').length;
+    // recount properly
+    let score = 0;
+    questions.forEach((_, i) => {
+      const btn = document.querySelectorAll(`#q${i} .opt`)[questions[i].c];
+      if (btn && btn.classList.contains('correct') && !document.querySelectorAll(`#q${i} .opt.wrong`).length) score++;
+    });
+    score = document.querySelectorAll('.opt.correct:not(.wrong)').length;
+    const pct = Math.round(score/questions.length*100);
+    const sb = document.getElementById('score-box');
+    sb.style.display = 'block';
+    sb.innerHTML = `Score final : ${score} / ${questions.length} — ${pct}% <br>${pct>=80?'🏆 Excellent ! Tu es prêt(e).':pct>=60?'👍 Bien ! Quelques révisions encore.':'📖 Continue à réviser !'}`;
+  }
+}
+
+function resetQuiz() { buildQuiz(); window.scrollTo({top: document.getElementById('quiz').offsetTop - 80, behavior:'smooth'}); }
+
+buildQuiz();
+</script>
+
+</body>
+</html>
